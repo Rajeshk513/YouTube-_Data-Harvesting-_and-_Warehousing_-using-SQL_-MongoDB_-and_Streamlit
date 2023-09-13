@@ -12,12 +12,12 @@ api_service_name = "youtube"
 api_version = "v3"
 youtube = build(api_service_name, api_version, developerKey=api_key)
 
-client = psycopg2.connect(host='localhost', user='postgres', password='Rajesh@123',
+client = psycopg2.connect(host='localhost', user='postgres', password='yourpassword',
                              database='youtube')
 cursor = client.cursor()
 
 project = pymongo.MongoClient(
-    "mongodb+srv://RAJESHK513:Rajeshkraji@cluster0.uf5udo7.mongodb.net/?retryWrites=true&w=majority")
+    "mongodb+srv://RAJESHK513:<yourpassword>@cluster0.uf5udo7.mongodb.net/?retryWrites=true&w=majority")
 
 
 st.set_page_config(layout="wide")
@@ -240,19 +240,19 @@ def channel_table():
     doc = list(data)
     df = pd.DataFrame(doc)
     try:
-        for _, row in df.iterrows():  # iterate through each records
+        for _, raj in df.iterrows():  # iterate through each records
             insert_query = '''
                 INSERT INTO channel (channelName, channelId, subscribers, views, totalVideos, playlistId, channel_description)
                 VALUES (%s, %s, %s, %s, %s, %s, %s)
             '''
             values = (
-                row['channelName'],
-                row['channel_id'],
-                row['subscribers'],
-                row['views'],
-                row['totalVideos'],
-                row['playlistId'],
-                row['channel_description']
+                raj['channelName'],
+                raj['channel_id'],
+                raj['subscribers'],
+                raj['views'],
+                raj['totalVideos'],
+                raj['playlistId'],
+                raj['channel_description']
             )
             try:
                 cursor.execute(insert_query, values)
